@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\User as UserResource;
 
 class RegisteredUserController extends Controller
 {
@@ -15,7 +16,7 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      *
      * @param  \App\Http\Requests\Auth\RegisterRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\User
      */
     public function store(RegisterRequest $request)
     {
@@ -29,6 +30,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return response()->noContent();
+        return new UserResource($user);
     }
 }
