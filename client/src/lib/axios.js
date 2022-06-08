@@ -5,7 +5,8 @@ const axios = Axios.create({
   headers: {
     "X-Requested-With": "XMLHttpRequest",
   },
-  withCredentials: true,
 });
+
+axios.defaults.withCredentials = true;
 
 export default axios;
