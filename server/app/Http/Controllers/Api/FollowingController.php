@@ -18,7 +18,7 @@ class FollowingController extends Controller
     {
         $user = auth()->user();
 
-        return new FollowerResource($user->following);
+        return new FollowerResource($user->follows);
     }
 
     /**
