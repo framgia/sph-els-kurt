@@ -28,4 +28,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/following', [Api\FollowingController::class, 'index']);
     Route::get('/following/{user}', [Api\FollowingController::class, 'show']);
+
+    Route::apiResource('/categories', Api\CategoryController::class);
 });
