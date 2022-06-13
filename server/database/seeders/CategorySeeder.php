@@ -2,22 +2,22 @@
 
 namespace Database\Seeders;
 
-use Dflydev\DotAccessData\Data;
+use App\Models\Category;
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        $this->call([
-            AdminSeeder::class,
-            CategorySeeder::class,
-        ]);
+        Category::factory()
+            ->count(10)
+            ->create();
     }
 }
