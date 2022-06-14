@@ -19,11 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->is_admin) {
-            return UserResource::collection(User::all());
-        } else {
-            return UserResource::collection(User::where('id', auth()->id())->get());
-        }
+        return UserResource::collection(User::whereIsAdmin(false)->get());
     }
 
     /**
