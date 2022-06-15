@@ -5,6 +5,8 @@ import NotFound from "./pages/404";
 import Home from "./pages/home";
 import Profiles from "./pages/profile/index";
 import Profile from "./pages/profile/profile";
+import Categories from "./pages/admin/categories";
+import CreateCategory from "./pages/admin/categories/create";
 
 function App() {
   return (
@@ -16,6 +18,12 @@ function App() {
         <Route path="/profiles" element={<Profiles />} />
         <Route exact path="/profile/:userId" element={<Profile />} />
         <Route path="/404" element={<NotFound />} />
+
+        {/*admin*/}
+        <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/admin/categories/create" element={<CreateCategory />} />
+
+        {/*user*/}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
