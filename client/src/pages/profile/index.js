@@ -17,7 +17,7 @@ const Profiles = (props) => {
   if (!users.data || !users.data.length) {
     return <Loading />;
   }
-  console.log(auth.user.data.id);
+
   const filteredUsers = users.data.filter((user) => {
     return user.id !== auth.user.data.id;
   });
