@@ -1,18 +1,19 @@
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchUsers } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import Loading from "components/layouts/Loading";
+import { fetchUsers } from "actions";
 
 const Profiles = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  useEffect(() => {
-    props.fetchUsers();
-  }, []);
+  const users = useSelector((state) => state.users);
 
-  const { users } = props;
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
 
   if (!users.data || !users.data.length) {
     return <Loading />;
@@ -58,12 +59,4 @@ const Profiles = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    users: state.users,
-  };
-};
-
-export default connect(mapStateToProps, {
-  fetchUsers,
-})(Profiles);
+export default Profiles;
