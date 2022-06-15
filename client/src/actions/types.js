@@ -3,3 +3,6 @@ export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
 export const SIGN_OUT = "SIGN_OUT";
 export const REGISTER = "REGISTER";
 export const REGISTER_ERROR = "REGISTER_ERROR";
+export const GET_CATEGORIES = "GET_CATEGORIES";
+export const CREATE_CATEGORY = "CREATE_CATEGORY";
+export const CREATE_CATEGORY_ERROR = "CREATE_CATEGORY_ERROR";
