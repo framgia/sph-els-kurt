@@ -30,10 +30,7 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->validated());
 
-        return response()->json([
-            'data' => new CategoryResource($category),
-            'message' => 'Category created successfully',
-        ]);
+        return new CategoryResource($category);
     }
 
     /**
