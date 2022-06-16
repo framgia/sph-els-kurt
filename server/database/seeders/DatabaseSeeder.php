@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
+            WordSeeder::class,
+            ChoiceSeeder::class,
         ]);
     }
 }

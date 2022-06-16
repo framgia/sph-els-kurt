@@ -30,4 +30,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/following/{user}', [Api\FollowingController::class, 'show']);
 
     Route::apiResource('/categories', Api\CategoryController::class);
+    Route::apiResource('/words', Api\WordController::class);
+    Route::apiResource('/choices', Api\ChoiceController::class);
 });

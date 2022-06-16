@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Choice extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'word_id',
         'name',
-        'description',
+        'is_correct',
     ];
 
-    public function words()
+    public function word()
     {
-        return $this->hasMany(Word::class);
+        return $this->belongsTo(Word::class);
     }
 }
