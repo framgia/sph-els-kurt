@@ -10,6 +10,9 @@ import {
   GET_FOLLOWING,
   FOLLOW_USER,
   UNFOLLOW_USER,
+  GET_CATEGORIES,
+  CREATE_CATEGORY,
+  CREATE_CATEGORY_ERROR,
 } from "./types";
 import axios from "lib/axios";
 
@@ -97,5 +100,29 @@ export const unfollowUser = (id) => async (dispatch) => {
 
   const response = await axios.delete("api/followers/" + id);
 
-  dispatch({type: UNFOLLOW_USER, payload: response.data});
-}
+  dispatch({ type: UNFOLLOW_USER, payload: response.data });
+};
+
+export const fetchCategories = () => async (dispatch) => {
+  const response = await axios.get("/api/categories");
+
+  dispatch({ type: GET_CATEGORIES, payload: response.data });
+};
+
+export const storeCategory = (values) => async (dispatch) => {
+  await csrf();
+
+  const response = await axios
+    .post("/api/categories", values)
+    .then((response) => {
+      dispatch({ type: CREATE_CATEGORY, payload: response.data });
+    })
+    .catch((error) => {
+      if (error.response.status !== 422) throw error;
+
+      dispatch({
+        type: CREATE_CATEGORY_ERROR,
+        payload: Object.values(error.response.data.errors).flat(),
+      });
+    });
+};

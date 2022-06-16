@@ -10,7 +10,7 @@ import {
   unfollowUser,
 } from "actions";
 import AppLayout from "components/layouts/AppLayout";
-import Loading from "components/layouts/Loading";
+import Loading from "components/Loading";
 
 const Profile = () => {
   let { userId } = useParams();

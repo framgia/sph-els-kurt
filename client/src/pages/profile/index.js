@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AppLayout from "components/layouts/AppLayout";
-import Loading from "components/layouts/Loading";
+import Loading from "components/Loading";
 import { fetchUsers } from "actions";
 
 const Profiles = (props) => {
