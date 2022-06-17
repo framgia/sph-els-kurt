@@ -13,6 +13,7 @@ import {
   GET_CATEGORIES,
   CREATE_CATEGORY,
   CREATE_CATEGORY_ERROR,
+  DELETE_CATEGORY,
 } from "./types";
 import axios from "lib/axios";
 
@@ -125,4 +126,12 @@ export const storeCategory = (values) => async (dispatch) => {
         payload: Object.values(error.response.data.errors).flat(),
       });
     });
+};
+
+export const deleteCategory = (id) => async (dispatch) => {
+  await csrf();
+
+  const response = await axios.delete("/api/categories/" + id);
+
+  dispatch({ type: DELETE_CATEGORY, payload: response.data });
 };

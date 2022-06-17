@@ -69,8 +69,10 @@ class CategoryController extends Controller
     {
         if (auth()->user()->is_admin) {
             $category->delete();
-
-            return response()->json(['message' => 'Category deleted successfully.']);
+            return response()->json([
+                'data' => new CategoryResource($category),
+                'message' => 'Category deleted successfully',
+            ]);
         } else {
             return response()->json(['message' => 'You are not authorized to delete this resource.']);
         }
