@@ -56,9 +56,6 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        if (!$category) {
-            return response()->json(['message' => 'Category not found.'], 404);
-        }
         $category->update($request->validated());
 
         return response()->json([
