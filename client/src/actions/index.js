@@ -19,7 +19,7 @@ import axios from "lib/axios";
 
 const csrf = () => axios.get("/sanctum/csrf-cookie");
 
-export const signIn = (values) => async (dispatch, errors) => {
+export const signIn = (values) => async (dispatch) => {
   await csrf();
 
   const response = await axios.post("/login", values).catch((error) => {
@@ -33,7 +33,7 @@ export const signIn = (values) => async (dispatch, errors) => {
   dispatch({ type: SIGN_IN, payload: response.data });
 };
 
-export const signUp = (values) => async (dispatch, errors) => {
+export const signUp = (values) => async (dispatch) => {
   await csrf();
 
   const response = await axios.post("/register", values).catch((error) => {
@@ -113,7 +113,7 @@ export const fetchCategories = () => async (dispatch) => {
 export const storeCategory = (values) => async (dispatch) => {
   await csrf();
 
-  const response = await axios
+  await axios
     .post("/api/categories", values)
     .then((response) => {
       dispatch({ type: CREATE_CATEGORY, payload: response.data });
