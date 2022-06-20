@@ -1,12 +1,12 @@
-import { FOLLOW_USER, GET_FOLLOWING, UNFOLLOW_USER } from "actions/types";
+import { GET_FOLLOWING } from "actions/types";
 
-export default (state = {}, action) => {
+const INITIAL_STATE = {
+  data: [],
+};
+
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_FOLLOWING:
-      return { ...state, data: action.payload.data };
-    case FOLLOW_USER:
-      return { ...state, data: action.payload.data };
-    case UNFOLLOW_USER:
       return { ...state, data: action.payload.data };
     default:
       return state;

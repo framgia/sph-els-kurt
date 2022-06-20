@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FollowerResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -63,6 +64,9 @@ class FollowerController extends Controller
     {
         $user->followers()->detach(auth()->id());
 
-        return response()->json(['message' => 'You are no longer following this user.']);
+        return response()->json([
+            'data' => new UserResource(auth()->user()),
+            'message' => 'You are no longer following this user.']
+        );
     }
 }

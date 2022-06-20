@@ -24,21 +24,17 @@ const Profile = () => {
 
   const follow = (id) => {
     dispatch(followUser(id));
-
-    navigate("/");
   };
 
   const unfollow = (id) => {
     dispatch(unfollowUser(id));
-
-    navigate("/");
   };
 
   useEffect(() => {
     dispatch(fetchUser(userId));
     dispatch(fetchFollowers(userId));
     dispatch(fetchFollowing(userId));
-  }, []);
+  }, [dispatch]);
 
   if (!user.data || !followers.data || !following.data || !auth) {
     return <Loading />;
