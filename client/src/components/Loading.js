@@ -1,4 +1,4 @@
-import AppLayout from "./AppLayout";
+import AppLayout from "./layouts/AppLayout";
 
 const Loading = () => {
   return (

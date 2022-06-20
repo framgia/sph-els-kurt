@@ -30,7 +30,10 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->validated());
 
-        return new CategoryResource($category);
+        return response()->json([
+            'data' => new CategoryResource($category),
+            'message' => 'Category created successfully',
+        ]);
     }
 
     /**
@@ -68,8 +71,10 @@ class CategoryController extends Controller
     {
         if (auth()->user()->is_admin) {
             $category->delete();
-
-            return response()->json(['message' => 'Category deleted successfully.']);
+            return response()->json([
+                'data' => new CategoryResource($category),
+                'message' => 'Category deleted successfully',
+            ]);
         } else {
             return response()->json(['message' => 'You are not authorized to delete this resource.']);
         }

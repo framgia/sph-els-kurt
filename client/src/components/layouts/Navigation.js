@@ -19,6 +19,7 @@ const Navigation = ({ users }) => {
   const navigation = [
     { name: "Dashboard", link: "/", current: true },
     { name: "Profiles", link: "/profiles" },
+    { name: "Categories", link: "/admin/categories" },
   ];
 
   const [open, setOpen] = useState(false);
@@ -31,7 +32,7 @@ const Navigation = ({ users }) => {
     if (!auth.isSignedIn) {
       navigate("/login");
     }
-  }, [auth]);
+  }, [auth, navigate]);
 
   return (
     <Disclosure as="nav" className="bg-white shadow-sm">
