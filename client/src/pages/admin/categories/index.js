@@ -96,12 +96,12 @@ const Categories = () => {
                         {category.description}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a
-                          href="#"
+                        <Link
+                          to={`/admin/categories/${category.id}/edit`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
                           Edit<span className="sr-only">, {category.name}</span>
-                        </a>
+                        </Link>
                         <button
                           onClick={() => {
                             setOpen(true);
