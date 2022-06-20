@@ -21,12 +21,12 @@ const Categories = () => {
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
+    if (!auth.user?.data.is_admin) {
+      navigate("/404");
+    }
+
     dispatch(fetchCategories());
   }, [dispatch]);
-
-  if (!auth.user.data.is_admin) {
-    navigate("/404");
-  }
 
   if (!categories.data || !Array.isArray(categories.data)) {
     return <Loading />;

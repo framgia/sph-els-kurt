@@ -17,9 +17,9 @@ const Navigation = ({ users }) => {
   const auth = useSelector((state) => state.auth);
 
   const navigation = [
-    { name: "Dashboard", link: "/", current: true },
-    { name: "Profiles", link: "/profiles" },
-    { name: "Categories", link: "/admin/categories" },
+    { name: "Dashboard", link: "/", guarded: false },
+    { name: "Profiles", link: "/profiles", guarded: false },
+    { name: "Categories", link: "/admin/categories", guarded: true },
   ];
 
   const [open, setOpen] = useState(false);
@@ -60,7 +60,11 @@ const Navigation = ({ users }) => {
                     <NavLink
                       key={item.name}
                       to={item.link}
-                      className="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                      className={
+                        item.guarded && auth.user?.data.is_admin === 0
+                          ? "hidden"
+                          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                      }
                     >
                       {item.name}
                     </NavLink>
@@ -136,20 +140,18 @@ const Navigation = ({ users }) => {
           <Disclosure.Panel className="sm:hidden">
             <div className="pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
-                <Disclosure.Button
+                <Link
                   key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                      : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800",
-                    "block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-                  )}
+                  to={item.link}
+                  className={
+                    item.guarded && auth.user?.data.is_admin === 0
+                      ? "hidden"
+                      : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                  }
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
-                </Disclosure.Button>
+                </Link>
               ))}
             </div>
             <div className="pt-4 pb-3 border-t border-gray-200">
