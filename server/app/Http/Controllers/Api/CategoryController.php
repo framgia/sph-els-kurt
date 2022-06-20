@@ -56,7 +56,15 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        return new CategoryResource($category);
+        if (!$category) {
+            return response()->json(['message' => 'Category not found.'], 404);
+        }
+        $category->update($request->validated());
+
+        return response()->json([
+            'data' => new CategoryResource($category),
+            'message' => 'Category updated successfully',
+        ]);
     }
 
     /**
