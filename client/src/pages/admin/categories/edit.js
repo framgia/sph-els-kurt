@@ -23,7 +23,7 @@ const EditCategory = () => {
   }, [categoryId, dispatch]);
 
   const renderForm = () => {
-    if (category.errors) {
+    if (category.errors?.message) {
       return <NotFound />;
     }
 
