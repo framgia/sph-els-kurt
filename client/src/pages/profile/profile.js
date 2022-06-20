@@ -46,10 +46,7 @@ const Profile = () => {
 
   const renderFollowButton = () => {
     const isFound = followers.data.some((element) => {
-      if (element.id === auth.user.data.id) {
-        return true;
-      }
-      return false;
+      return element.id === auth.user.data.id;
     });
 
     if (isFound) {
