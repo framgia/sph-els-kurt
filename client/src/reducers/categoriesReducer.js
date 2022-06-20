@@ -14,22 +14,21 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_CATEGORIES:
-      delete state["message"];
-      delete state["errors"];
-      return { ...state, data: action.payload.data };
+      return {
+        ...state,
+        data: action.payload.data,
+        message: null,
+        errors: null,
+      };
     case CREATE_CATEGORY:
-      let newState = Object.assign({}, state);
-
-      newState.data.push(action.payload.data);
-      newState.message = action.payload.message;
-
-      delete newState["errors"];
-
-      return newState;
+      return {
+        ...state,
+        data: action.payload.data,
+        message: action.payload.message,
+        errors: null,
+      };
     case CREATE_CATEGORY_ERROR:
-      delete state["message"];
-
-      return { ...state, errors: action.payload };
+      return { ...state, errors: action.payload, message: null };
     case DELETE_CATEGORY:
       return {
         ...state,

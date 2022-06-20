@@ -20,7 +20,7 @@ const CreateCategory = () => {
     if (categories.message) {
       navigate("/admin/categories");
     }
-  }, [dispatch, categories.message]);
+  }, [categories.message]);
 
   return (
     <AppLayout
