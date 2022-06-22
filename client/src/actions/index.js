@@ -14,6 +14,10 @@ import {
   CREATE_CATEGORY,
   CREATE_CATEGORY_ERROR,
   DELETE_CATEGORY,
+  GET_CATEGORY,
+  EDIT_CATEGORY,
+  EDIT_CATEGORY_ERROR,
+  GET_CATEGORY_ERROR,
 } from "./types";
 import axios from "lib/axios";
 
@@ -110,6 +114,17 @@ export const fetchCategories = () => async (dispatch) => {
   dispatch({ type: GET_CATEGORIES, payload: response.data });
 };
 
+export const fetchCategory = (id) => async (dispatch) => {
+  await axios
+    .get("/api/categories/" + id)
+    .then((response) => {
+      dispatch({ type: GET_CATEGORY, payload: response.data });
+    })
+    .catch((error) => {
+      dispatch({ type: GET_CATEGORY_ERROR, payload: error.response.data });
+    });
+};
+
 export const storeCategory = (values) => async (dispatch) => {
   await csrf();
 
@@ -128,6 +143,23 @@ export const storeCategory = (values) => async (dispatch) => {
     });
 };
 
+export const updateCategory = (id, values) => async (dispatch) => {
+  await csrf();
+
+  await axios
+    .put("/api/categories/" + id, values)
+    .then((response) => {
+      dispatch({ type: EDIT_CATEGORY, payload: response.data });
+    })
+    .catch((error) => {
+      if (error.response.status !== 422) throw error;
+
+      dispatch({
+        type: EDIT_CATEGORY_ERROR,
+        payload: Object.values(error.response.data.errors).flat(),
+      });
+    });
+};
 export const deleteCategory = (id) => async (dispatch) => {
   await csrf();
 
