@@ -30,7 +30,10 @@ class WordController extends Controller
     {
         $word = Word::create($request->validated());
 
-        return new WordResource($word);
+        return response()->json([
+            'data' => new WordResource($word),
+            'message' => 'Word created successfully',
+        ]);
     }
 
     /**

@@ -10,6 +10,8 @@ import CreateCategory from "./pages/admin/categories/create";
 import EditCategory from "./pages/admin/categories/edit";
 import Lessons from "./pages/lessons";
 import Lesson from "./pages/lessons/show";
+import Words from "./pages/admin/categories/words";
+import CreateWords from "./pages/admin/categories/words/create";
 
 function App() {
   return (
@@ -27,6 +29,11 @@ function App() {
         <Route
           path="/admin/categories/:categoryId/edit"
           element={<EditCategory />}
+        />
+        <Route path="/admin/categories/:categoryId/words" element={<Words />} />
+        <Route
+          path="/admin/categories/:categoryId/words/create"
+          element={<CreateWords />}
         />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />

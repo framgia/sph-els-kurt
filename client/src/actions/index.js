@@ -18,6 +18,7 @@ import {
   EDIT_CATEGORY,
   EDIT_CATEGORY_ERROR,
   GET_CATEGORY_ERROR,
+  CREATE_WORD,
 } from "./types";
 import axios from "lib/axios";
 
@@ -166,4 +167,22 @@ export const deleteCategory = (id) => async (dispatch) => {
   const response = await axios.delete("/api/categories/" + id);
 
   dispatch({ type: DELETE_CATEGORY, payload: response.data });
+};
+
+export const storeWord = (values) => async (dispatch) => {
+  await csrf();
+
+  await axios
+    .post("/api/words", values)
+    .then((response) => {
+      dispatch({ type: CREATE_WORD, payload: response.data });
+    })
+    .catch((error) => {
+      if (error.response.status !== 422) throw error;
+
+      dispatch({
+        type: CREATE_CATEGORY_ERROR,
+        payload: Object.values(error.response.data.errors).flat(),
+      });
+    });
 };

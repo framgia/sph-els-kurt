@@ -25,6 +25,7 @@ class StoreWordRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:words',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }
