@@ -1,13 +1,15 @@
 import {
   CREATE_CATEGORY,
   CREATE_CATEGORY_ERROR,
+  CREATE_WORD,
+  CREATE_WORD_ERROR,
   DELETE_CATEGORY,
   EDIT_CATEGORY,
   EDIT_CATEGORY_ERROR,
   GET_CATEGORIES,
   GET_CATEGORY,
   GET_CATEGORY_ERROR,
-} from "../actions/types";
+} from "actions/types";
 
 const INITIAL_STATE = {
   data: [],
@@ -60,6 +62,20 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         data: state.data.filter((item) => item.id !== action.payload.data.id),
       };
+    case CREATE_WORD:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          words: {
+            ...state.data.words,
+            [action.payload.data.id]: action.payload.data,
+          },
+        },
+        message: action.payload.message,
+      };
+    case CREATE_WORD_ERROR:
+      return { ...state, errors: action.payload, message: null };
     default:
       return state;
   }
