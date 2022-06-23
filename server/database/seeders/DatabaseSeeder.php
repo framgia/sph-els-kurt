@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             WordSeeder::class,
             ChoiceSeeder::class,
+            AnswerSeeder::class,
         ]);
     }
 }

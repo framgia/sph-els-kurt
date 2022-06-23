@@ -32,4 +32,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/categories', Api\CategoryController::class);
     Route::apiResource('/words', Api\WordController::class);
     Route::apiResource('/choices', Api\ChoiceController::class);
+    Route::apiResource('/answers', Api\AnswerController::class)->only([
+        'index', 'store'
+    ]);
+
+    Route::get('/users/{user}/answers', Api\UserAnswerController::class);
+    Route::get('/users/{user}/categories/{category}/answers', Api\UserCategoryAnswerController::class);
 });
