@@ -79,7 +79,10 @@ class UserController extends Controller
         if (auth()->user()->is_admin) {
             $user->delete();
 
-            return response()->noContent();
+            return response()->json([
+                'data' => new UserResource($user),
+                'message' => 'User deleted successfully.',
+            ]);
         } else {
             return response()->json(['message' => 'You are not authorized to delete this user.']);
         }

@@ -1,4 +1,5 @@
 import {
+  DELETE_USER,
   EDIT_USER,
   EDIT_USER_ERROR,
   GET_USER,
@@ -35,6 +36,11 @@ export default (state = INITIAL_STATE, action) => {
       };
     case EDIT_USER_ERROR:
       return { ...state, errors: action.payload, message: null };
+    case DELETE_USER:
+      return {
+        ...state,
+        data: state.data.filter((item) => item.id !== action.payload.data.id),
+      };
     default:
       return state;
   }
