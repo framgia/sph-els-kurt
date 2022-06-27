@@ -26,6 +26,9 @@ class StoreWordRequest extends FormRequest
         return [
             'name' => 'required|unique:words',
             'category_id' => 'required|exists:categories,id',
+            'choices' => 'required|array',
+            'choices.*.name' => 'required|string|max:255',
+            'choices.*.is_correct' => 'required|boolean',
         ];
     }
 }
