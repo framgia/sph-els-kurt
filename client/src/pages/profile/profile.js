@@ -24,21 +24,17 @@ const Profile = () => {
 
   const follow = (id) => {
     dispatch(followUser(id));
-
-    navigate("/");
   };
 
   const unfollow = (id) => {
     dispatch(unfollowUser(id));
-
-    navigate("/");
   };
 
   useEffect(() => {
     dispatch(fetchUser(userId));
     dispatch(fetchFollowers(userId));
     dispatch(fetchFollowing(userId));
-  }, []);
+  }, [dispatch]);
 
   if (!user.data || !followers.data || !following.data || !auth) {
     return <Loading />;
@@ -50,10 +46,7 @@ const Profile = () => {
 
   const renderFollowButton = () => {
     const isFound = followers.data.some((element) => {
-      if (element.id === auth.user.data.id) {
-        return true;
-      }
-      return false;
+      return element.id === auth.user.data.id;
     });
 
     if (isFound) {
