@@ -12,6 +12,8 @@ import Lessons from "./pages/lessons";
 import Lesson from "./pages/lessons/show";
 import Words from "./pages/admin/categories/words";
 import CreateWords from "./pages/admin/categories/words/create";
+import Users from "./pages/admin/users";
+import EditUser from "./pages/admin/users/edit";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           path="/admin/categories/:categoryId/words/create"
           element={<CreateWords />}
         />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/users/:userId/edit" element={<EditUser />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
