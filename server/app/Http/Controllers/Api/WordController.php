@@ -29,6 +29,8 @@ class WordController extends Controller
     public function store(StoreWordRequest $request)
     {
         $word = Word::create($request->validated());
+        $choices = $request->validated()['choices'];
+        $word->choices()->createMany($choices);
 
         return response()->json([
             'data' => new WordResource($word),
