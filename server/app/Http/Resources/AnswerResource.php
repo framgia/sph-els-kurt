@@ -18,6 +18,7 @@ class AnswerResource extends JsonResource
     {
         return [
             'user_id' => $this->user_id,
+            'choice_id' => $this->choice_id,
             'choice' => $this->choice->name,
             'word_id' => $this->choice->word->name,
             'category_id' => $this->choice->word->category->name,

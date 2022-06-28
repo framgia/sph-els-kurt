@@ -12,6 +12,7 @@ import Lessons from "./pages/lessons";
 import Lesson from "./pages/lessons/show";
 import Words from "./pages/admin/categories/words";
 import CreateWords from "./pages/admin/categories/words/create";
+import AnswerLesson from "./pages/lessons/answer";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/profile/:userId" element={<Profile />} />
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/lessons/:lessonId" element={<Lesson />} />
+        <Route path="/lessons/:lessonId/answer" element={<AnswerLesson />} />
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/categories/create" element={<CreateCategory />} />
         <Route
