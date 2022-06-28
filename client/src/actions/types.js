@@ -10,6 +10,9 @@ export const GET_FOLLOWERS = "GET_FOLLOWERS";
 export const GET_FOLLOWING = "GET_FOLLOWING";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
+export const DELETE_USER = "DELETE_USER";
+export const EDIT_USER = "EDIT_USER";
+export const EDIT_USER_ERROR = "EDIT_USER_ERROR";
 
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CATEGORY = "GET_CATEGORY";

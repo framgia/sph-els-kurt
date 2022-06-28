@@ -14,6 +14,8 @@ import {
   CREATE_CATEGORY,
   CREATE_CATEGORY_ERROR,
   DELETE_CATEGORY,
+  EDIT_USER,
+  EDIT_USER_ERROR,
   GET_CATEGORY,
   EDIT_CATEGORY,
   EDIT_CATEGORY_ERROR,
@@ -21,8 +23,8 @@ import {
   CREATE_WORD,
   CREATE_ANSWER,
   CREATE_ANSWER_ERROR,
-  GET_USER_ANSWERS,
   GET_USER_CATEGORY_ANSWERS,
+  DELETE_USER,
 } from "./types";
 import axios from "lib/axios";
 
@@ -79,6 +81,32 @@ export const fetchUser = (id) => async (dispatch) => {
   const response = await axios.get("api/users/" + id);
 
   dispatch({ type: GET_USER, payload: response.data });
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  await csrf();
+
+  const response = await axios.delete("api/users/" + id);
+
+  dispatch({ type: DELETE_USER, payload: response.data });
+};
+
+export const updateUser = (id, values) => async (dispatch) => {
+  await csrf();
+
+  await axios
+    .put("/api/users/" + id, values)
+    .then((response) => {
+      dispatch({ type: EDIT_USER, payload: response.data });
+    })
+    .catch((error) => {
+      if (error.response.status !== 422) throw error;
+
+      dispatch({
+        type: EDIT_USER_ERROR,
+        payload: Object.values(error.response.data.errors).flat(),
+      });
+    });
 };
 
 export const fetchFollowers = (id) => async (dispatch) => {
@@ -165,6 +193,7 @@ export const updateCategory = (id, values) => async (dispatch) => {
       });
     });
 };
+
 export const deleteCategory = (id) => async (dispatch) => {
   await csrf();
 
