@@ -22,7 +22,8 @@ class AnswerResource extends JsonResource
             'choice' => $this->choice->name,
             'word_id' => $this->choice->word->name,
             'category_id' => $this->choice->word->category->name,
-            'correct' => $this->choice->is_correct
+            'correct' => $this->choice->is_correct,
+            'correct_choice' => $this->choice->word->choices->where('is_correct', true)->first()->name,
         ];
     }
 }

@@ -15,6 +15,7 @@ import CreateWords from "./pages/admin/categories/words/create";
 import AnswerLesson from "./pages/lessons/answer";
 import Users from "./pages/admin/users";
 import EditUser from "./pages/admin/users/edit";
+import ResultLesson from "./pages/lessons/result";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/lessons/:lessonId" element={<Lesson />} />
         <Route path="/lessons/:lessonId/answer" element={<AnswerLesson />} />
+        <Route path="/lessons/:lessonId/result" element={<ResultLesson />} />
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/categories/create" element={<CreateCategory />} />
         <Route

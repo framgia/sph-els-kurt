@@ -23,15 +23,11 @@ const AnswerLesson = () => {
   useEffect(() => {
     dispatch(fetchCategory(lessonId));
     dispatch(fetchUserCategoryAnswers(auth.user.data.id, lessonId));
-  }, [dispatch, lessonId]);
+  }, [dispatch, lessonId, navigate]);
 
   const renderLesson = () => {
-    if (answers?.data?.length === lesson.data.words?.length) {
-      navigate(`/404`);
-    }
-
-    if (wordIndex >= lesson.data.words?.length) {
-      return <NotFound />;
+    if (answers.data?.length === lesson.data.words?.length) {
+      navigate(`/lessons/${lessonId}/result`);
     }
 
     if (!lesson.data || !lesson.data.words) {
@@ -65,6 +61,9 @@ const AnswerLesson = () => {
             <Form
               onSubmit={(values) => {
                 dispatch(storeAnswer(values));
+                if (wordIndex + 1 === lesson.data.words.length) {
+                  navigate(`/lessons/${lessonId}/result`);
+                }
                 setWordIndex(wordIndex + 1);
               }}
               validate={(values) => {
