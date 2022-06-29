@@ -21,7 +21,7 @@ const ResultLesson = () => {
     dispatch(fetchUserCategoryAnswers(auth.user.data.id, lessonId));
   }, [dispatch, lessonId]);
 
-  if (!answers.data) {
+  if (!answers.data.length) {
     return (
       <AppLayout>
         <Loading />
