@@ -20,6 +20,8 @@ const Navigation = ({ users }) => {
     { name: "Dashboard", link: "/", guarded: false },
     { name: "Profiles", link: "/profiles", guarded: false },
     { name: "Categories", link: "/admin/categories", guarded: true },
+    { name: "Users", link: "/admin/users", guarded: true },
+    { name: "Lessons", link: "/lessons", guarded: false },
   ];
 
   const [open, setOpen] = useState(false);
