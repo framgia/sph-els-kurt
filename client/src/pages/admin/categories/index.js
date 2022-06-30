@@ -24,7 +24,7 @@ const Categories = () => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  if (!auth.user.data.is_admin) {
+  if (!auth.user?.data?.is_admin) {
     navigate("/404");
   }
 
@@ -86,7 +86,7 @@ const Categories = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {categories.data.map((category, categoryIdx) => (
+                  {categories.data?.map((category, categoryIdx) => (
                     <tr
                       key={category.name}
                       className={
