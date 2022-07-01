@@ -24,7 +24,7 @@ import {
   CREATE_ANSWER,
   CREATE_ANSWER_ERROR,
   GET_USER_CATEGORY_ANSWERS,
-  DELETE_USER,
+  DELETE_USER, GET_USER_ANSWERS,
 } from "./types";
 import axios from "lib/axios";
 
@@ -248,3 +248,10 @@ export const fetchUserCategoryAnswers =
 
     dispatch({ type: GET_USER_CATEGORY_ANSWERS, payload: response.data });
   };
+export const fetchUserAnswers = (userId) => async (dispatch) => {
+  await csrf();
+
+  const response = await axios.get(`/api/users/${userId}/answers`);
+
+  dispatch({ type: GET_USER_ANSWERS, payload: response.data });
+}

@@ -1,6 +1,7 @@
 import {
   CREATE_ANSWER,
   CREATE_ANSWER_ERROR,
+  GET_USER_ANSWERS,
   GET_USER_CATEGORY_ANSWERS,
 } from "actions/types";
 
@@ -17,6 +18,8 @@ export default (state = INITIAL_STATE, action) => {
     case CREATE_ANSWER_ERROR:
       return { ...state, errors: action.payload };
     case GET_USER_CATEGORY_ANSWERS:
+      return { ...state, data: action.payload.data };
+    case GET_USER_ANSWERS:
       return { ...state, data: action.payload.data };
     default:
       return state;
