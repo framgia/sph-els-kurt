@@ -22,6 +22,7 @@ import {
   GET_CATEGORY_ERROR,
   CREATE_WORD,
   DELETE_USER,
+  GET_ACTIVITY_LOGS,
 } from "./types";
 import axios from "lib/axios";
 
@@ -215,4 +216,12 @@ export const storeWord = (values) => async (dispatch) => {
         payload: Object.values(error.response.data.errors).flat(),
       });
     });
+};
+
+export const fetchActivityLogs = (id) => async (dispatch) => {
+  await csrf();
+
+  const response = await axios.get(`/api/users/${id}/activities`);
+
+  dispatch({ type: GET_ACTIVITY_LOGS, payload: response.data });
 };

@@ -1,4 +1,4 @@
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,9 +8,11 @@ import {
   fetchFollowing,
   followUser,
   unfollowUser,
+  fetchActivityLogs,
 } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import Loading from "components/Loading";
+import ActivityLog from "../../components/ActivityLog";
 
 const Profile = () => {
   let { userId } = useParams();
@@ -21,6 +23,7 @@ const Profile = () => {
   const followers = useSelector((state) => state.followers);
   const following = useSelector((state) => state.following);
   const auth = useSelector((state) => state.auth);
+  const activities = useSelector((state) => state.activity_logs);
 
   const follow = (id) => {
     dispatch(followUser(id));
@@ -38,9 +41,16 @@ const Profile = () => {
     dispatch(fetchUser(userId));
     dispatch(fetchFollowers(userId));
     dispatch(fetchFollowing(userId));
-  }, []);
+    dispatch(fetchActivityLogs(userId));
+  }, [dispatch, userId]);
 
-  if (!user.data || !followers.data || !following.data || !auth) {
+  if (
+    !user.data ||
+    !followers.data ||
+    !following.data ||
+    !auth ||
+    !activities.data
+  ) {
     return <Loading />;
   }
 
@@ -118,6 +128,7 @@ const Profile = () => {
           {renderFollowButton()}
         </div>
       </div>
+      <ActivityLog activities={activities} />
     </AppLayout>
   );
 };
