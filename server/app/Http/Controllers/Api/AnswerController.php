@@ -26,19 +26,15 @@ class AnswerController extends Controller
         $wordsCount = Word::where('category_id', $answer->choice->word->category_id)
             ->count();
 
-        if ($wordsCount == Answer::where('user_id', auth()->user()->id)
+        $userAnswers = Answer::where('user_id', auth()->user()->id)
             ->leftJoin('choices', 'answers.choice_id', '=', 'choices.id')
             ->leftJoin('words', 'choices.word_id', '=', 'words.id')
             ->leftJoin('categories', 'words.category_id', '=', 'categories.id')
-            ->where('categories.id', $answer->choice->word->category_id)
-            ->count())
+            ->where('categories.id', $answer->choice->word->category_id);
+
+        if ($wordsCount == $userAnswers->count())
         {
-            $correctAnswersCount = Answer::where('user_id', auth()->user()->id)
-                ->leftJoin('choices', 'answers.choice_id', '=', 'choices.id')
-                ->leftJoin('words', 'choices.word_id', '=', 'words.id')
-                ->leftJoin('categories', 'words.category_id', '=', 'categories.id')
-                ->where('choices.is_correct', true)
-                ->count();
+            $correctAnswersCount = $userAnswers->where('choices.is_correct', true)->count();
 
             activity()
                 ->by(auth()->user())
