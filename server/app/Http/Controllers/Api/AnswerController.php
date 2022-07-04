@@ -23,6 +23,25 @@ class AnswerController extends Controller
             'choice_id' => $request->choice_id,
         ]);
 
+        $wordsCount = Word::where('category_id', $answer->choice->word->category_id)
+            ->count();
+
+        $userAnswers = Answer::where('user_id', auth()->user()->id)
+            ->leftJoin('choices', 'answers.choice_id', '=', 'choices.id')
+            ->leftJoin('words', 'choices.word_id', '=', 'words.id')
+            ->leftJoin('categories', 'words.category_id', '=', 'categories.id')
+            ->where('categories.id', $answer->choice->word->category_id);
+
+        if ($wordsCount == $userAnswers->count())
+        {
+            $correctAnswersCount = $userAnswers->where('choices.is_correct', true)->count();
+
+            activity()
+                ->by(auth()->user())
+                ->event('learned')
+                ->log(auth()->user()->name . ' has learned ' . $correctAnswersCount . ' of ' . $wordsCount . ' words in ' . $answer->choice->word->category->name);
+        }
+
         return response()->json([
             'data' => new AnswerResource($answer),
             'message' => 'Answer created successfully'

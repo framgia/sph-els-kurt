@@ -24,7 +24,7 @@ class FollowerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return FollowerResource
      */
     public function store(Request $request, User $user)
@@ -32,12 +32,17 @@ class FollowerController extends Controller
         if ($user->followers()->where('follower_id', auth()->id())->exists()) {
             return response()->json(['message' => 'You are already following this user.']);
         }
-        
+
         if ($user->id === auth()->id()) {
             return response()->json(['message' => 'You cannot follow yourself.']);
         }
 
         $user->followers()->attach(auth()->id());
+
+        activity()
+            ->by(auth()->user())
+            ->event('followed')
+            ->log(auth()->user()->name . ' has followed ' . $user->name);
 
         return new FollowerResource($user->followers);
     }
@@ -45,7 +50,7 @@ class FollowerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return FollowerResource
      */
     public function show(User $user)
@@ -56,12 +61,14 @@ class FollowerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, User $user)
     {
         $user->followers()->detach(auth()->id());
+
+        activity()->by(auth()->user())->event('unfollowed')->log(auth()->user()->name . ' has unfollowed ' . $user->name);
 
         return response()->json(['message' => 'You are no longer following this user.']);
     }

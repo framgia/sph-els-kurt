@@ -39,4 +39,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/users/{user}/answers', Api\UserAnswerController::class);
     Route::get('/users/{user}/categories/{category}/answers', Api\UserCategoryAnswerController::class);
+
+    Route::get('/users/{user}/activities', [Api\ActivityLogController::class, 'index']);
 });
