@@ -17,6 +17,7 @@ class CategoryWordResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'description' => $this->description,
             'words' => WordResource::collection($this->words),
         ];
     }

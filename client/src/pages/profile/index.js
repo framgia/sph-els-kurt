@@ -16,7 +16,11 @@ const Profiles = (props) => {
   }, []);
 
   if (!users.data || !users.data.length) {
-    return <Loading />;
+    return (
+      <AppLayout>
+        <Loading />
+      </AppLayout>
+    );
   }
 
   const filteredUsers = users.data.filter((user) => {

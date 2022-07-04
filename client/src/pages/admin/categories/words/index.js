@@ -23,7 +23,11 @@ const Words = () => {
   }
 
   if (!category.data || !Array.isArray(category.data.words)) {
-    return <Loading />;
+    return (
+      <AppLayout>
+        <Loading />
+      </AppLayout>
+    );
   }
 
   return (

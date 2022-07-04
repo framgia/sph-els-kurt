@@ -41,7 +41,11 @@ const Profile = () => {
   }, []);
 
   if (!user.data || !followers.data || !following.data || !auth) {
-    return <Loading />;
+    return (
+      <AppLayout>
+        <Loading />
+      </AppLayout>
+    );
   }
 
   if (user.is_admin === 1) {
