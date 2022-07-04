@@ -92,7 +92,7 @@ export const updateUser = (id, values) => async (dispatch) => {
   await csrf();
 
   await axios
-    .put("/api/users/" + id, values)
+    .post("/api/users/" + id, values)
     .then((response) => {
       dispatch({ type: EDIT_USER, payload: response.data });
     })
