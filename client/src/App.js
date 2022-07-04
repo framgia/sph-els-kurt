@@ -14,6 +14,7 @@ import Words from "./pages/admin/categories/words";
 import CreateWords from "./pages/admin/categories/words/create";
 import Users from "./pages/admin/users";
 import EditUser from "./pages/admin/users/edit";
+import EditProfile from "./pages/profile/edit";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profiles" element={<Profiles />} />
         <Route exact path="/profile/:userId" element={<Profile />} />
+        <Route path="/profile/edit" element={<EditProfile />} />
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/lessons/:lessonId" element={<Lesson />} />
         <Route path="/admin/categories" element={<Categories />} />

@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //create user john doe
         User::factory()->create([
             'name' => 'John Doe',
             'email' => 'john@gmail.com',
             'password' => Hash::make('password'),
+            'avatar' => '/images/avatar.jpg',
             'remember_token' => Str::random(10),
             'is_admin' => false,
         ]);

@@ -20,6 +20,7 @@ class AdminSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
+            'avatar' => '/images/avatar.jpg',
             'remember_token' => Str::random(10),
             'is_admin' => true,
         ]);

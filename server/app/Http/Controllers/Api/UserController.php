@@ -60,7 +60,15 @@ class UserController extends Controller
             return response()->json(['message' => 'You are not authorized to update this user.']);
         }
 
-        $user->update($request->validated());
+        if ($request->file('avatar')) {
+            $user->update($request->validated());
+            $filename = $user->id . '.' . $request->file('avatar')->getClientOriginalExtension();
+            $request->file('avatar')->storeAs('avatars', $filename, 'public');
+            $user->avatar = '/storage/avatars/' . $filename;
+            $user->save();
+        } else {
+            $user->update($request->validated());
+        }
 
         return response()->json([
             'data' => new UserResource($user),
