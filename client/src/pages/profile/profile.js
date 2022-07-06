@@ -2,25 +2,23 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  fetchUser,
-  fetchFollowers,
-  fetchFollowing,
-  followUser,
-  unfollowUser,
-} from "actions";
+import { followUser, unfollowUser } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import Loading from "components/Loading";
+import { fetchUser, usersSelector } from "slices/users";
+import { authSelector } from "slices/auth";
+import { fetchFollowers, followersSelector } from "slices/followers";
+import { fetchFollowing, followingSelector } from "slices/following";
 
 const Profile = () => {
   let { userId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.users);
-  const followers = useSelector((state) => state.followers);
-  const following = useSelector((state) => state.following);
-  const auth = useSelector((state) => state.auth);
+  const user = useSelector(usersSelector);
+  const followers = useSelector(followersSelector);
+  const following = useSelector(followingSelector);
+  const auth = useSelector(authSelector);
 
   const follow = (id) => {
     dispatch(followUser(id));
@@ -38,9 +36,9 @@ const Profile = () => {
     dispatch(fetchUser(userId));
     dispatch(fetchFollowers(userId));
     dispatch(fetchFollowing(userId));
-  }, []);
+  }, [dispatch]);
 
-  if (!user.data || !followers.data || !following.data || !auth) {
+  if (!user || !followers || !following || !auth) {
     return <Loading />;
   }
 
@@ -49,7 +47,7 @@ const Profile = () => {
   }
 
   const renderFollowButton = () => {
-    const isFound = followers.data.some((element) => {
+    const isFound = followers.data?.some((element) => {
       if (element.id === auth.user.data.id) {
         return true;
       }

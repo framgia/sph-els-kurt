@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { Field, Form } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signUp } from "actions";
 import ValidationErrors from "components/ValidationErrors";
 import GuestLayout from "components/layouts/GuestLayout";
+import { signUp } from "slices/auth";
 
 const Register = () => {
   const dispatch = useDispatch();

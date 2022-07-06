@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCategory, fetchCategories } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "components/Loading";
@@ -8,10 +7,16 @@ import { PlusIcon } from "@heroicons/react/solid";
 import SuccessMessage from "components/SuccessMessage";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
+import {
+  categoriesSelector,
+  fetchCategories,
+  destroyCategory,
+} from "slices/categories";
+import { authSelector } from "slices/auth";
 
 const Categories = () => {
-  const categories = useSelector((state) => state.categories);
-  const auth = useSelector((state) => state.auth);
+  const categories = useSelector(categoriesSelector);
+  const auth = useSelector(authSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -193,7 +198,7 @@ const Categories = () => {
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
                       setOpen(false);
-                      dispatch(deleteCategory(categoryId));
+                      dispatch(destroyCategory(categoryId));
                     }}
                   >
                     Delete

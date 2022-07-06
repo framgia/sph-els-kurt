@@ -1,16 +1,16 @@
 import { combineReducers } from "redux";
 import authReducer from "./auth";
-// import usersReducer from "./usersReducer";
-// import followersReducer from "./followersReducer";
-// import followingReducer from "./followingReducer";
-// import categoriesReducer from "./categoriesReducer";
+import usersReducer from "./users";
+import categoriesReducer from "./categories";
+import followersReducer from "./followers";
+import followingReducer from "./following";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  // users: usersReducer,
-  // followers: followersReducer,
-  // following: followingReducer,
-  // categories: categoriesReducer,
+  users: usersReducer,
+  followers: followersReducer,
+  following: followingReducer,
+  categories: categoriesReducer,
 });
 
 export default rootReducer;

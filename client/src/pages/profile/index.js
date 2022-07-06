@@ -3,17 +3,18 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AppLayout from "components/layouts/AppLayout";
 import Loading from "components/Loading";
-import { fetchUsers } from "actions";
+import { authSelector } from "slices/auth";
+import { fetchUsers, usersSelector } from "slices/users";
 
 const Profiles = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
-  const users = useSelector((state) => state.users);
+  const auth = useSelector(authSelector);
+  const users = useSelector(usersSelector);
 
   useEffect(() => {
     dispatch(fetchUsers());
-  }, []);
+  }, [dispatch]);
 
   if (!users.data || !users.data.length) {
     return <Loading />;

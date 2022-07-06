@@ -13,7 +13,7 @@ const localStore = () => {
 export const initialState = {
   isSignedIn: localStore().isSignedIn,
   user: localStore().user,
-  errors: null,
+  errors: {},
 };
 
 //Slice
@@ -27,15 +27,15 @@ const authSlice = createSlice({
         JSON.stringify({
           isSignedIn: true,
           user: payload,
-          errors: null,
+          errors: {},
         })
       );
 
       state.isSignedIn = true;
       state.user = payload;
-      state.errors = null;
+      state.errors = {};
     },
-    signInFailure: (state, payload) => {
+    signInFailure: (state, { payload }) => {
       state.errors = payload;
     },
     signOutSuccess: (state) => {
@@ -45,12 +45,34 @@ const authSlice = createSlice({
       state.user = null;
       state.errors = {};
     },
+    registerSuccess: (state, { payload }) => {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          isSignedIn: true,
+          user: payload,
+          errors: {},
+        })
+      );
+
+      state.isSignedIn = true;
+      state.user = payload;
+      state.errors = {};
+    },
+    registerFailure: (state, { payload }) => {
+      state.errors = payload;
+    },
   },
 });
 
 // Actions generated from the slice
-export const { signInFailure, signInSuccess, signOutSuccess } =
-  authSlice.actions;
+export const {
+  signInFailure,
+  signInSuccess,
+  signOutSuccess,
+  registerFailure,
+  registerSuccess,
+} = authSlice.actions;
 
 // Selector
 export const authSelector = (state) => state.auth;
@@ -87,5 +109,23 @@ export function signOut() {
     await axios.post("/logout").then(() => {
       dispatch(signOutSuccess());
     });
+  };
+}
+
+export function signUp(values) {
+  return async (dispatch) => {
+    await csrf();
+
+    await axios
+      .post("/register", values)
+      .then((response) => {
+        dispatch(registerSuccess(response.data));
+      })
+      .catch((error) => {
+        if (error.response.status !== 422) throw error;
+        dispatch(
+          registerFailure(Object.values(error.response.data.errors).flat())
+        );
+      });
   };
 }

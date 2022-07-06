@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategory } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "components/Loading";
 import { ChevronRightIcon, PlusIcon } from "@heroicons/react/solid";
 import SuccessMessage from "components/SuccessMessage";
+import { categoriesSelector, fetchCategory } from "slices/categories";
+import { authSelector } from "slices/auth";
 
 const Words = () => {
-  const category = useSelector((state) => state.categories);
-  const auth = useSelector((state) => state.auth);
+  const category = useSelector(categoriesSelector);
+  const auth = useSelector(authSelector);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { categoryId } = useParams();

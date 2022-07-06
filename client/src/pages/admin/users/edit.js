@@ -3,18 +3,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Field, Form } from "react-final-form";
 import { ArrowNarrowLeftIcon, SaveIcon } from "@heroicons/react/solid";
-import { fetchUser, updateUser } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import ValidationErrors from "components/ValidationErrors";
 import SuccessMessage from "components/SuccessMessage";
-
 import NotFound from "pages/404";
+import { fetchUser, usersSelector, updateUser } from "slices/users";
 
 const EditUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.users);
+  const user = useSelector(usersSelector);
 
   const { userId } = useParams();
 
