@@ -1,21 +1,55 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategory } from "actions";
-import { useNavigate, useParams } from "react-router-dom";
-import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
+import { fetchCategory, fetchUserCategoryAnswers } from "actions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { ArrowNarrowLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
 import AppLayout from "components/layouts/AppLayout";
 import NotFound from "pages/404";
+import Loading from "../../components/Loading";
 
 const Lesson = () => {
   const lesson = useSelector((state) => state.categories);
+  const auth = useSelector((state) => state.auth);
+  const answers = useSelector((state) => state.answers);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { lessonId } = useParams();
 
   useEffect(() => {
     dispatch(fetchCategory(lessonId));
+    dispatch(fetchUserCategoryAnswers(auth.user.data.id, lessonId));
   }, [dispatch, lessonId]);
+
+  if (!lesson.data || !lesson.data.words) {
+    return (
+      <AppLayout>
+        <Loading />
+      </AppLayout>
+    );
+  }
+
+  const renderAnswerButton = () => {
+    if (answers.data.length !== lesson.data.words?.length) {
+      return (
+        <Link
+          to={`/lessons/${lessonId}/answer`}
+          className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Start answering
+        </Link>
+      );
+    } else {
+      return (
+        <button
+          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-400 bg-white hover:bg-gray-50 cursor-not-allowed"
+          disabled
+        >
+          Answered
+        </button>
+      );
+    }
+  };
 
   const renderLesson = () => {
     if (lesson.errors?.message) {
@@ -33,14 +67,8 @@ const Lesson = () => {
               {lesson.data.description}
             </p>
           </div>
-          <div className="ml-4 mt-4 flex-shrink-0">
-            <button
-              type="button"
-              className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Start answering
-            </button>
-          </div>
+
+          <div className="ml-4 mt-4 flex-shrink-0">{renderAnswerButton()}</div>
         </div>
       </div>
     );
@@ -49,25 +77,23 @@ const Lesson = () => {
   return (
     <AppLayout
       header={
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Lessons
-        </h2>
-      }
-    >
-      <div className="px-0">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Back
-          <ArrowNarrowLeftIcon
-            className="ml-3 -mr-1 h-5 w-5"
+        <div className="flex items-center">
+          <Link
+            to="/lessons"
+            className="font-semibold text-xl text-gray-400 leading-tight"
+          >
+            Lessons
+          </Link>
+          <ChevronRightIcon
+            className="flex-shrink-0 h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
-        </button>
-      </div>
-
+          <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+            {lesson.data.name}
+          </h2>
+        </div>
+      }
+    >
       {renderLesson()}
     </AppLayout>
   );

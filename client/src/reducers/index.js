@@ -4,6 +4,7 @@ import usersReducer from "./usersReducer";
 import followersReducer from "./followersReducer";
 import followingReducer from "./followingReducer";
 import categoriesReducer from "./categoriesReducer";
+import answersReducer from "./answersReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   followers: followersReducer,
   following: followingReducer,
   categories: categoriesReducer,
+  answers: answersReducer,
 });
