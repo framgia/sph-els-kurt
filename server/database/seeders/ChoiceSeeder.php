@@ -16,7 +16,7 @@ class ChoiceSeeder extends Seeder
     public function run()
     {
         Choice::factory()
-            ->count(50)
+            ->count(80)
             ->create();
     }
 }
