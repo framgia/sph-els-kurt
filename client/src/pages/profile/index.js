@@ -6,7 +6,7 @@ import Loading from "components/Loading";
 import { authSelector } from "slices/auth";
 import { fetchUsers, usersSelector } from "slices/users";
 
-const Profiles = (props) => {
+const Profiles = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector(authSelector);

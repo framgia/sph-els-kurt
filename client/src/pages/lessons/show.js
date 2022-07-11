@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategory } from "actions";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
 
 import AppLayout from "components/layouts/AppLayout";
 import NotFound from "pages/404";
+import { fetchCategory } from "slices/categories";
 
 const Lesson = () => {
   const lesson = useSelector((state) => state.categories);

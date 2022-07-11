@@ -1,14 +1,16 @@
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { followUser, unfollowUser } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import Loading from "components/Loading";
-import { fetchUser, usersSelector } from "slices/users";
+import {
+  fetchUser,
+  followUser,
+  unfollowUser,
+  usersSelector,
+} from "slices/users";
 import { authSelector } from "slices/auth";
-import { fetchFollowers, followersSelector } from "slices/followers";
-import { fetchFollowing, followingSelector } from "slices/following";
 
 const Profile = () => {
   let { userId } = useParams();
@@ -16,9 +18,8 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(usersSelector);
-  const followers = useSelector(followersSelector);
-  const following = useSelector(followingSelector);
   const auth = useSelector(authSelector);
+  const { followers, following } = user.data;
 
   const follow = (id) => {
     dispatch(followUser(id));
@@ -34,11 +35,9 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(fetchUser(userId));
-    dispatch(fetchFollowers(userId));
-    dispatch(fetchFollowing(userId));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
-  if (!user || !followers || !following || !auth) {
+  if (!user || !user.data || !auth) {
     return <Loading />;
   }
 
@@ -47,11 +46,8 @@ const Profile = () => {
   }
 
   const renderFollowButton = () => {
-    const isFound = followers.data?.some((element) => {
-      if (element.id === auth.user.data.id) {
-        return true;
-      }
-      return false;
+    const isFound = followers?.some((element) => {
+      return element.id === auth.user.data.id;
     });
 
     if (isFound) {
@@ -107,8 +103,8 @@ const Profile = () => {
               {user.data.name}
             </h1>
             <div className="text-sm font-medium text-gray-500">
-              <div className="mr-4">Following: {following.data.length}</div>
-              <div className="mr-4">Followers: {followers.data.length}</div>
+              <div className="mr-4">Following: {following?.length}</div>
+              <div className="mr-4">Followers: {followers?.length}</div>
             </div>
           </div>
         </div>

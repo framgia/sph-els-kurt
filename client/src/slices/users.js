@@ -35,12 +35,25 @@ const usersSlice = createSlice({
     deleteUser: (state, { payload }) => {
       state.data = state.data.filter((user) => user.id !== payload.data.id);
     },
+    FOLLOW_USER: (state, { payload }) => {
+      state.data = payload.data;
+    },
+    UNFOLLOW_USER: (state, { payload }) => {
+      state.data = payload.data;
+    },
   },
 });
 
 // Actions generated from the slice
-export const { getUsers, getUser, editUser, editUserFailure, deleteUser } =
-  usersSlice.actions;
+export const {
+  getUsers,
+  getUser,
+  editUser,
+  editUserFailure,
+  deleteUser,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
+} = usersSlice.actions;
 
 // Selector
 export const usersSelector = (state) => state.users;
@@ -97,6 +110,26 @@ export function destroyUser(id) {
 
     await axios.delete("/api/users/" + id).then((response) => {
       dispatch(deleteUser(response.data));
+    });
+  };
+}
+
+export function followUser(id) {
+  return async (dispatch) => {
+    await csrf();
+
+    await axios.post("/api/followers/" + id).then((response) => {
+      dispatch(FOLLOW_USER(response.data));
+    });
+  };
+}
+
+export function unfollowUser(id) {
+  return async (dispatch) => {
+    await csrf();
+
+    await axios.delete("/api/followers/" + id).then((response) => {
+      dispatch(UNFOLLOW_USER(response.data));
     });
   };
 }

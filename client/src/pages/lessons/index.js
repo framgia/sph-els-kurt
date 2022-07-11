@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "actions";
 import { Link } from "react-router-dom";
 
 import AppLayout from "components/layouts/AppLayout";
 import Loading from "components/Loading";
-import NotFound from "../404";
+import { fetchCategories } from "slices/categories";
 
 const Lessons = () => {
   const categories = useSelector((state) => state.categories);
