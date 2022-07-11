@@ -4,7 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { signOut } from "actions";
+import { signOut } from "../../slices/auth";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

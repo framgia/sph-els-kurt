@@ -6,21 +6,21 @@ import { useNavigate } from "react-router-dom";
 import ValidationErrors from "components/ValidationErrors";
 import SuccessMessage from "components/SuccessMessage";
 import { ArrowNarrowLeftIcon, SaveIcon } from "@heroicons/react/solid";
-import { fetchCategories, storeCategory } from "actions";
+import {
+  categoriesSelector,
+  fetchCategories,
+  storeCategory,
+} from "slices/categories";
 
 const CreateCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const categories = useSelector((state) => state.categories);
+  const categories = useSelector(categoriesSelector);
 
   useEffect(() => {
     dispatch(fetchCategories());
-
-    if (categories.message) {
-      navigate("/admin/categories");
-    }
-  }, [categories.message]);
+  }, [dispatch]);
 
   return (
     <AppLayout

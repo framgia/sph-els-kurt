@@ -3,18 +3,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Field, Form } from "react-final-form";
 import { ArrowNarrowLeftIcon, SaveIcon } from "@heroicons/react/solid";
-import { fetchCategory, updateCategory } from "actions";
 import AppLayout from "components/layouts/AppLayout";
 import ValidationErrors from "components/ValidationErrors";
 import SuccessMessage from "components/SuccessMessage";
 
 import NotFound from "pages/404";
+import {
+  categoriesSelector,
+  fetchCategory,
+  updateCategory,
+} from "slices/categories";
 
 const EditCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const category = useSelector((state) => state.categories);
+  const category = useSelector(categoriesSelector);
 
   const { categoryId } = useParams();
 

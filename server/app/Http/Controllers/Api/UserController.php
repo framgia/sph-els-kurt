@@ -80,7 +80,7 @@ class UserController extends Controller
             $user->delete();
 
             return response()->json([
-                'data' => new UserResource($user),
+                'data' => new UserResource($user->with('followers', 'follows')->get()),
                 'message' => 'User deleted successfully.',
             ]);
         } else {

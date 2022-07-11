@@ -1,8 +1,9 @@
 import AppLayout from "../components/layouts/AppLayout";
 import { useSelector } from "react-redux";
+import { authSelector } from "slices/auth";
 
 const Home = () => {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector(authSelector);
 
   return (
     <AppLayout

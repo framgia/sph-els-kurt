@@ -13,12 +13,12 @@ import {
   PlusIcon,
   MinusCircleIcon,
 } from "@heroicons/react/solid";
-import { storeWord } from "actions";
+import { categoriesSelector, storeWord } from "slices/categories";
 
 const CreateWords = () => {
   const dispatch = useDispatch();
 
-  const categories = useSelector((state) => state.categories);
+  const categories = useSelector(categoriesSelector);
 
   const { categoryId } = useParams();
   const requiredArray = (value) =>
