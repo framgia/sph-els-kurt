@@ -29,7 +29,11 @@ const Users = () => {
   }
 
   if (!users.data || !Array.isArray(users.data)) {
-    return <Loading />;
+    return (
+      <AppLayout>
+        <Loading />
+      </AppLayout>
+    );
   }
 
   return (

@@ -21,7 +21,10 @@ import {
   EDIT_CATEGORY_ERROR,
   GET_CATEGORY_ERROR,
   CREATE_WORD,
-  DELETE_USER,
+  CREATE_ANSWER,
+  CREATE_ANSWER_ERROR,
+  GET_USER_CATEGORY_ANSWERS,
+  DELETE_USER, GET_USER_ANSWERS,
 } from "./types";
 import axios from "lib/axios";
 
@@ -216,3 +219,39 @@ export const storeWord = (values) => async (dispatch) => {
       });
     });
 };
+
+export const storeAnswer = (values) => async (dispatch) => {
+  await csrf();
+
+  await axios
+    .post("/api/answers/", values)
+    .then((response) => {
+      dispatch({ type: CREATE_ANSWER, payload: response.data });
+    })
+    .catch((error) => {
+      if (error.response.status !== 422) throw error;
+
+      dispatch({
+        type: CREATE_ANSWER_ERROR,
+        payload: Object.values(error.response.data.errors).flat(),
+      });
+    });
+};
+
+export const fetchUserCategoryAnswers =
+  (userId, categoryId) => async (dispatch) => {
+    await csrf();
+
+    const response = await axios.get(
+      `/api/users/${userId}/categories/${categoryId}/answers`
+    );
+
+    dispatch({ type: GET_USER_CATEGORY_ANSWERS, payload: response.data });
+  };
+export const fetchUserAnswers = (userId) => async (dispatch) => {
+  await csrf();
+
+  const response = await axios.get(`/api/users/${userId}/answers`);
+
+  dispatch({ type: GET_USER_ANSWERS, payload: response.data });
+}

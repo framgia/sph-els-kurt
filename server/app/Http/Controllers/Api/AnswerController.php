@@ -8,6 +8,7 @@ use App\Models\Answer;
 use App\Http\Requests\StoreAnswerRequest;
 use App\Models\Choice;
 use App\Models\Word;
+use Illuminate\Http\Request;
 
 class AnswerController extends Controller
 {
@@ -16,8 +17,12 @@ class AnswerController extends Controller
         return AnswerResource::collection(Answer::all());
     }
 
-    public function store(StoreAnswerRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            'choice_id' => 'required|exists:choices,id',
+        ]);
+
         $answer = Answer::create([
             'user_id' => auth()->user()->id,
             'choice_id' => $request->choice_id,

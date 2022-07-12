@@ -16,7 +16,11 @@ const Lessons = () => {
   }, [dispatch]);
 
   if (!Array.isArray(categories.data)) {
-    return <Loading />;
+    return (
+      <AppLayout>
+        <Loading />
+      </AppLayout>
+    );
   }
 
   return (
